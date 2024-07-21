@@ -1,26 +1,40 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <Header />
+    <router-view :cart="cart" @add-to-cart="addToCart" @remove-from-cart="removeFromCart" />
+    <Footer />
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/HeaderC.vue';
+import Footer from './components/FooterC.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    Header,
+    Footer,
+  },
+  data() {
+    return {
+      cart: [],
+    };
+  },
+  methods: {
+    addToCart(product) {
+      this.cart.push(product);
+    },
+    removeFromCart(item) {
+      const index = this.cart.findIndex(product => product.id === item.id);
+      if (index !== -1) {
+        this.cart.splice(index, 1);
+      }
+    },
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+/* Agrega estilos globales aquí si es necesario */
 </style>
